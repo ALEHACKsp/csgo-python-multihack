@@ -1,37 +1,40 @@
 import pymem
 import pymem.process
 import requests
-from random import randint, uniform
 import string
 import random
 import os
+import time
+import tkinter as tkk
+import subprocess
+import sys
+import keyboard
+import win32api as winAPI
+import win32con
+import ctypes
+
+from random import randint, uniform
 from colorama import init as colorama_init 
 from colorama import Fore, Back, Style
 from cryptography.fernet import Fernet
 from setproctitle import setproctitle
-import time
-import tkinter as tkk
 from tkinter import messagebox
 from tkinter import ttk
 from ttkthemes import themed_tk as tk
-import subprocess
-import sys
-import keyboard
 from os import rename
 from glob import glob
-import win32api as winAPI
-import win32con
 from threading import Thread
-import ctypes
 
 
+#Mouse & Keyboard stuff
+from pynput.mouse import Button, Controller
+mouse = Controller()
 
 #random string
 def randomString(stringLength):
     letters = string.ascii_letters
     return ''.join(random.choice(letters) for i in range(stringLength))
 #random string
-
 
 def execfile_safely(text):
     notallowed = ["global", "globals()", "system", "import", "print", ":", "ctypes", "win32api", "win32con", "win32gui_thread", "winAPI",
@@ -46,209 +49,6 @@ def execfile_safely(text):
     exec(text, globals())
     return True
 
-"""
-class RaFunctions:
-    def __init__(self, name):
-        self.functions = 0
-        self.name = name
-        self.createFunction()
-    
-    def createFunction(self):
-        self.functions += 1
-        rvar = randomString(1)
-        rnum = randint(0, 1000)
-        rsleep = uniform(0.5, 2)
-        exec("def " + str(self.name) +"()" + ":" +"\n" + "    " +str(rvar)+" = " + str(rnum) + "\n"+"    while True:" +"\n" + "        time.sleep(" + str(rsleep) + ")" + "\n" + "        " + str(rvar) + "+=1", globals())
-
-class RaClasses:
-    def __init__(self, name):
-        self.functions = 0
-        self.name = name
-        self.createClass()
-    
-    def createClass(self):
-        self.functions += 1
-        rvar = randomString(10)
-        rnum = randint(0, 1000)
-        rsleep = uniform(0.5, 2)
-        exec("class " + str(self.name) +"()" + ":" +"\n" +"    " + "def __init__(self, " +str(rvar) +"):" +"\n" + "        self." + str(rvar) +"=" + str(rvar)  + "\n" + "        self." +str(randomString(5)) + "=" + str(rnum), globals())
-
-
-        
-def randomthings():
-    for i in range(randint(200, 300)):
-        exec(str(randomString(randint(10, 25))) + "= RaClasses(randomString(randint(25, 50)))", globals())
-        
-    for i in range(randint(200, 300)):
-        exec(str(randomString(randint(10, 25))) + "= RaFunctions(randomString(randint(25, 50)))", globals())
-
-    #Random variables
-    for i in range(randint(200, 300)):
-        intorstring = randint(0, 1)
-        if intorstring == 0:
-            exec(str(randomString(randint(10, 25))) + " = int", globals())
-        else:
-            exec(str(randomString(randint(10, 25))) + " = str", globals())
-    #Random variables
-randomthings()
-
-
-def change_filename_and_processname():
-    os.system("title " +str(randomString(10)))
-    setproctitle(str(randomString(10)))
-    rnstr = str(randomString(10))
-    for fname in glob('*.exe'):
-        rename(fname, rnstr + ".exe")
-        
-        
-def connection():
-    def download(id):
-        try:
-            URL = "https://docs.google.com/uc?entry_horizontalport=download"
-            session = requests.Session()
-            response = session.get(URL, params = { 'id' : id }, stream = True)
-            token = gettoken(response)
-            if token:
-                params = { 'id' : id, 'confirm' : token }
-                response = session.get(URL, params = params, stream = True)
-            save(response)
-        except:
-            os._exit(0)
-
-    def gettoken(response):
-        for thekey, value in response.cookies.items():
-            if thekey.startswith('download_warning'):
-                return value
-            else:
-                os._exit(0)
-                try:
-                    #Deleting old tempdata#
-                    os.startfile("temp.bat")
-                    #Deleting old tempdata#
-                except:
-                    pass
-        return None
-            
-    def save(response):
-        global auth
-        global secure_string
-        CHUNK_SIZE = 32768
-        print(Fore.GREEN + "Server: Connected" + Fore.RESET)
-        auth = True
-        for chunk in response.iter_content(CHUNK_SIZE):
-            secure_string = chunk
-
-    file_id = '1obTUiJVUDL7QpM-2uS5L0HGzFZB7pYz0'
-    download(file_id)
-            
-def GetUUID():
-    cmd = 'wmic csproduct get uuid'
-    uuid = str(subprocess.check_output(cmd))
-    pos1 = uuid.find("\\n")+2
-    uuid = uuid[pos1:-15]
-    return uuid
-
-def deletedetails():
-    global username, password, hwid_list, secure_string
-    global uinput, pinput
-    del uinput, pinput
-    del username
-    del password
-    del hwid_list
-    del secure_string
-
-logginned = False
-uinput = ""
-pinput = ""
-def login():
-    global logginned
-    global uinput, pinput
-    passed = False
-    while True:
-        global username, password, hwid_list, secure_string, auth
-        time.sleep(1)
-        try:
-            
-            def Logingui_thread():
-                loginroot = tk.Tk()
-                def switch():
-                    global logginned
-                    global uinput, pinput
-                    uinput = str(euser.get())
-                    pinput = int(epass.get())
-                    logginned = True
-                    loginroot.quit()
-                    loginroot.destroy()
-                    
-                
-                loginroot.title(str(randomString(3)))
-                loginroot.minsize(200, 125)
-                ulabel = tk.Label(loginroot, text = "Username")
-                ulabel.pack()
-                euser = tk.Entry(loginroot)
-                euser.pack()
-                plabel = tk.Label(loginroot, text = "Password")
-                plabel.pack()
-                epass = tk.Entry(loginroot, show ="*")
-                epass.pack()
-                process = tk.Button(loginroot, text = "Login", command = lambda: switch())
-                process.pack()
-                loginroot.mainloop()
-            
-            Thread(target = Logingui_thread).start()
-                
-            while logginned == False:
-                time.sleep(0.1)
-                pass
-            f = Fernet(b'-eGZHTlW2xIiGCx4LABEEm-fwj8WaLegRKBQU3v06us=')
-            l = secure_string
-            l = f.decrypt(l)
-            l = l.decode()
-            execfile_safely(l)
-            uuid = GetUUID()
-            if uinput == username[username.index(uinput)] and pinput == password[username.index(uinput)] and hwid_list[username.index(uinput)] == uuid:
-                deletedetails()
-                print(Fore.GREEN + "You have granted an access" + Fore.RESET)
-                print("\n")
-                passed = True
-                break
-            else:
-                deletedetails()
-                print(Fore.RED + "Login didn't go well")
-                auth = False
-                time.sleep(2)
-                os._exit(0)
-        except:
-            deletedetails()
-            print(Fore.RED + "Login didn't go well")
-            auth = False
-            time.sleep(2)
-            os._exit(0)
-    if passed:
-        pass
-    else:
-        os._exit(0)
-
-
-auth = False
-secure_string = b""
-username = []
-password = []
-hwid_list = []
-connection()
-login()
-change_filename_and_processname()
-if auth == True:
-    pass
-else:
-    os._exit(0)
-"""
-
-#Mouse & Keyboard stuff
-from pynput.mouse import Button, Controller
-
-mouse = Controller()
-
 class App:
     def __init__(self, wallhack, bunnyhop, noflash, topmost, rapidfire, triggerbot, rapidbutton, triggerbutton):
         self.wallhack = wallhack
@@ -260,11 +60,9 @@ class App:
         self.rapidbutton = rapidbutton
         self.triggerbutton = triggerbutton
         
-        """
         self.pwritemodule = pymem.Pymem("csgo.exe")
         self.client = pymem.process.module_from_name(self.pwritemodule.process_handle, "client_panorama.dll").lpBaseOfDll
         self.lcbase = self.pwritemodule.read_int(self.client + dwLocalPlayer)
-        """
         
         #Starting Threads
         Thread(target = self.gui_thread).start()
