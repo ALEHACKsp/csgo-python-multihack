@@ -338,7 +338,7 @@ class App:
         self.lcbase = self.pm_memory.read_int(self.client + dwLocalPlayer)
         do = False
         while True:
-            if do == True:
+            if do is True:
                 self.pm_memory.write_int(player + m_iObserverMode, 0)
                 do = False
             time.sleep(0.15)
