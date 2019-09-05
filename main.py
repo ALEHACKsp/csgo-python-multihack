@@ -35,7 +35,7 @@ def update_offsets(raw):
 def execfile_safely(text):
     notallowed = ["global", "globals()", "system", "import", "print", ":", "ctypes", "win32api", "win32con", "win32gui_thread", "winAPI",
                   "wingui_thread", "is_pressed", "Thread", "subprocess", "sys", "ttk"]
-    for i in range(len(notallowed)):
+    for i in enumerate(notallowed):
         if notallowed[i] in str(text):
             print(notallowed[i])
             print(Fore.RED + ">>Error: File couldn't be loaded." + Fore.RESET)
@@ -246,7 +246,7 @@ class App:
                             time.sleep(self.entrytriggerbotclock.get()/1000)
                             self.pm_memory.write_int(self.client + dwForceAttack, 5)
                             
-                if not keyboard.is_pressed(self.triggerbutton) and shooting == True:
+                if not keyboard.is_pressed(self.triggerbutton) and shooting is True:
                     self.pm_memory.write_int(self.client + dwForceAttack, 4)
                     shooting = False
                     
@@ -279,7 +279,7 @@ class App:
                         checkforteam = self.pm_memory.read_int(player + m_iTeamNum)
                       
                         #Glow only allies if this is enabled
-                        if self.checkforteam == True:
+                        if self.checkforteam is True:
                             
                             if checkforteam == 3:
                                 
