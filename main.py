@@ -35,7 +35,7 @@ def update_offsets(raw):
 def execfile_safely(text):
     notallowed = ["global", "globals()", "system", "import", "print", ":", "ctypes", "win32api", "win32con", "win32gui_thread", "winAPI",
                   "wingui_thread", "is_pressed", "Thread", "subprocess", "sys", "ttk"]
-    for i in enumerate(notallowed):
+    for i in range(len(notallowed)):
         if notallowed[i] in str(text):
             print(notallowed[i])
             print(Fore.RED + ">>Error: File couldn't be loaded." + Fore.RESET)
@@ -68,7 +68,7 @@ try:
     offsets_to_call = update_offsets(offsets)
     execfile_safely(offsets_to_call)
     print("Offsets have been updated succesfuly. :)")
-except exception as e:
+except Exception as e:
     print(e)
     print("Something went wrong. Is your internet connection working? Does the program have permission to access the internet?")
     print("Closing...")
@@ -420,3 +420,4 @@ class App:
             self.checkforteam = True
 
 App(wallhack, bunnyhop, noflash, topmost, rapidfire, triggerbot, rapidbutton, triggerbutton, thirdperson)
+
