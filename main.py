@@ -50,7 +50,7 @@ try:
     load = open("config.ini", "r")
     execfile_safely(load.read())
     print("'config.ini' has been found and loaded.")
-except:
+except IOError:
     wallhack = False
     bunnyhop = False
     noflash = False
@@ -60,7 +60,7 @@ except:
     rapidbutton = "x"
     triggerbutton = "c"
     thirdperson = False
-    print("'config.ini' was not found, default settings applied.")
+    print("'config.ini' was not found or coudn't be loaded, default settings applied.")
 
 #Self updating offsets
 try:
@@ -68,7 +68,8 @@ try:
     offsets_to_call = update_offsets(offsets)
     execfile_safely(offsets_to_call)
     print("Offsets have been updated succesfuly. :)")
-except:
+except exception as e:
+    print(e)
     print("Something went wrong. Is your internet connection working? Does the program have permission to access the internet?")
     print("Closing...")
     time.sleep(5)
