@@ -277,8 +277,7 @@ class App:
                         #Check for team which you are playing in
                         player = self.pm_memory.read_int(self.client + dwLocalPlayer)
                         checkforteam = self.pm_memory.read_int(player + m_iTeamNum)
-                        
-                        
+                      
                         #Glow only allies if this is enabled
                         if self.checkforteam == True:
                             
