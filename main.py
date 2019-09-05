@@ -270,7 +270,7 @@ class App:
                 time.sleep(0.02)
                 glow_manager = self.pm_memory.read_int(self.client + dwGlowObjectManager)
                 for i in range(1, 32): 
-                    entity = self.pm_memory.read_int(self.client + dwEntityListt + i * 0x10)
+                    entity = self.pm_memory.read_int(self.client + dwEntityList + i * 0x10)
                     if entity:
                         entity_team_id = self.pm_memory.read_int(entity + m_iTeamNum)
                         entity_glow = self.pm_memory.read_int(entity + m_iGlowIndex)
@@ -340,11 +340,11 @@ class App:
         do = False
         while True:
             if do is True:
-                self.pm_memory.write_int(player + m_iObserverMode, 0)
+                self.pm_memory.write_int(self.lcbase + m_iObserverMode, 0)
                 do = False
             time.sleep(0.15)
             while self.thirdperson:
-                self.pm_memory.write_int(player + m_iObserverMode, 1)
+                self.pm_memory.write_int(self.lcbase + m_iObserverMode, 1)
                 do = True
                 time.sleep(0.25)
                     
@@ -355,7 +355,7 @@ class App:
                 time.sleep(0.025)
                 try:
                     self.lcbase = self.pm_memory.read_int(self.client + dwLocalPlayer)
-                    flash_value = player + m_flFlashMaxAlpha
+                    flash_value = self.lcbase + m_flFlashMaxAlpha
                     self.pm_memory.write_float(flash_value, float(0))
                     time.sleep(0.025)
                 except pymem.exception.MemoryReadError:
