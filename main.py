@@ -237,12 +237,12 @@ class App:
                 self.lcbase = self.pm_memory.read_int(self.client + dwLocalPlayer)
                 
                 if keyboard.is_pressed(self.triggerbutton):
-                    entity = self.pm_memory.read_int(player + m_iCrosshairId)
+                    entity = self.pm_memory.read_int(self.lcbase + m_iCrosshairId)
                     if entity > 0 and entity <= 64:
                         entity = self.pm_memory.read_int(self.client + dwEntityListt + (entity -1) * 0x10)
                         entity_team = self.pm_memory.read_int(entity + m_iTeamNum)
-                        player_team = self.pm_memory.read_int(player + m_iTeamNum)
-                        if player_team != entity_team:
+                        self.lcbase_team = self.pm_memory.read_int(self.lcbase + m_iTeamNum)
+                        if self.lcbase_team != entity_team:
                             shooting = True
                             time.sleep(self.entrytriggerbotclock.get()/1000)
                             self.pm_memory.write_int(self.client + dwForceAttack, 5)
@@ -276,8 +276,8 @@ class App:
                         entity_glow = self.pm_memory.read_int(entity + m_iGlowIndex)
                         
                         #Check for team which you are playing in
-                        player = self.pm_memory.read_int(self.client + dwLocalPlayer)
-                        checkforteam = self.pm_memory.read_int(player + m_iTeamNum)
+                        self.lcbase = self.pm_memory.read_int(self.client + dwLocalPlayer)
+                        checkforteam = self.pm_memory.read_int(self.lcbase + m_iTeamNum)
                       
                         #Glow only allies if this is enabled
                         if self.checkforteam is True:
@@ -322,9 +322,9 @@ class App:
             while self.bunnyhop:
                     time.sleep(0.001)
                     try:
-                        player = self.pm_memory.read_int(self.client + dwLocalPlayer)
+                        self.lcbase = self.pm_memory.read_int(self.client + dwLocalPlayer)
                         force_jump = self.client + dwForceJump
-                        on_ground = self.pm_memory.read_int(player + m_fFlags)
+                        on_ground = self.pm_memory.read_int(self.lcbase + m_fFlags)
 
                         if keyboard.is_pressed("space"):
                             if on_ground == 257:
