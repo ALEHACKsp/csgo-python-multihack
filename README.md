@@ -12,4 +12,4 @@ It has few settings to the TKINTER GUI (that looks as good as it was possible), 
 
 It's self updating from hazedumper's repository. https://github.com/frk1/hazedumper
 
-(https://cdn.discordapp.com/attachments/614195404455804948/617395621372100619/unknown.png)
+(screenshot1.png)
