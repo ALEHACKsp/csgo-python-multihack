@@ -369,25 +369,25 @@ class App:
             c+=1
             
     def thirdperson_toggle(self):
-        if self.thirdperson == True:
+        if self.thirdperson:
             self.thirdperson = False
         else:
             self.thirdperson = True
             
     def triggerbot_toggle(self):
-        if self.triggerbot == True:
+        if self.triggerbot:
             self.triggerbot = False
         else:
             self.triggerbot = True
     
     def rapidfire_toggle(self):
-        if self.rapidfire == True:
+        if self.rapidfire:
             self.rapidfire = False
         else:
             self.rapidfire = True
             
     def topmost_toggle(self):
-        if self.topmost == True:
+        if self.topmost:
             self.topmost = False
             self.root.attributes("-topmost", self.topmost)
         else:
@@ -395,7 +395,7 @@ class App:
             self.root.attributes("-topmost", self.topmost)
             
     def wallhack_toggle(self):
-        if self.wallhack == True:
+        if self.wallhack:
             self.wallhack = False
         else:
             self.wallhack = True
@@ -407,13 +407,13 @@ class App:
             self.bunnyhop = True
     
     def noflash_toggle(self):
-        if self.noflash == True:
+        if self.noflash:
             self.noflash = False
         else:
             self.noflash = True
             
     def checkforteam_toggle(self):
-        if self.checkforteam == True:
+        if self.checkforteam:
             self.checkforteam = False
         else:
             self.checkforteam = True
